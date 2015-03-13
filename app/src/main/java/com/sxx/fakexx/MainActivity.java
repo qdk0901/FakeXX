@@ -53,8 +53,6 @@ public class MainActivity extends Activity {
      */
     private Button saveLocationButton;
 
-    private String touchType;
-
     /**
      * 用于显示地图状态的面板
      */
@@ -84,7 +82,6 @@ public class MainActivity extends Activity {
 
         mBaiduMap.setOnMapClickListener(new OnMapClickListener() {
             public void onMapClick(LatLng point) {
-                touchType = "单击";
                 currentPt = point;
                 updateMapState();
             }
@@ -95,14 +92,12 @@ public class MainActivity extends Activity {
         });
         mBaiduMap.setOnMapLongClickListener(new OnMapLongClickListener() {
             public void onMapLongClick(LatLng point) {
-                touchType = "长按";
                 currentPt = point;
                 updateMapState();
             }
         });
         mBaiduMap.setOnMapDoubleClickListener(new OnMapDoubleClickListener() {
             public void onMapDoubleClick(LatLng point) {
-                touchType = "双击";
                 currentPt = point;
                 updateMapState();
             }
@@ -125,10 +120,10 @@ public class MainActivity extends Activity {
         OnClickListener onClickListener = new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.equals(saveLocationButton)) {
+                if (view.equals(saveLocationButton) && currentPt != null) {
                     mSettings.setString("latitude",  "" + currentPt.latitude);
                     mSettings.setString("longitude", "" + currentPt.longitude);
-                    Toast.makeText(getApplicationContext(), currentPt.latitude + ", " + currentPt.longitude + " saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.save_location) + ": (" + currentPt.longitude + ", " + currentPt.latitude + ")", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -145,9 +140,9 @@ public class MainActivity extends Activity {
         }
         String state = "";
         if (currentPt == null) {
-            state = "点击、长按、双击地图以获取经纬度和地图状态";
+            state = getString(R.string.tip);
         } else {
-            state = String.format(touchType + ",当前经度： %f 当前纬度：%f",
+            state = String.format(getString(R.string.current_location) + "(%f, %f)",
                     currentPt.longitude, currentPt.latitude);
         }
         mStateBar.setText(state);

@@ -4,5 +4,8 @@
     <string name="app_name">fakexx</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="save_location">Save location</string>
+    <string name="tip">Select longtitue and latitude by click, long press, double click the map</string>
+    <string name="current_location">Current location:</string>
 
 </resources>
